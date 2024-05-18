@@ -1,2 +1,2 @@
 # Healthcare-DApp
-Healthcare DApp (Decentalized application)
+Healthcare DApp (Decentralized application)
