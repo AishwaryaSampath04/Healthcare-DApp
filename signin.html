@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-image: url("https://static.vecteezy.com/system/resources/previews/011/231/538/original/abstract-geometric-background-with-isometric-digital-blocks-blockchain-concept-and-modern-technology-illustration-free-vector.jpg");
+            background-size: cover; 
+            background-position: center; 
+            min-height: 100vh; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .card {
+            width: 400px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+        }
+
+        .form-signin {
+            margin-bottom: 20px;
+        }
+
+        .btn-block {
+            width: 100%;
+        }
+
+        .toggle-form {
+            text-align: center;
+            margin-top: 10px;
+            color: #007bff;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <h3 class="text-center mb-4">Sign In</h3>
+                    <form id="signin-form" class="form-signin" action="index.html">
+                        <div class="form-group">
+                            <label for="username">Username:</label>
+                            <input type="text" class="form-control" id="username" name="username" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password:</label>
+                            <input type="password" class="form-control" id="password" name="password" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+                    </form>
+                    <div class="toggle-form" id="toggle-signup">Don't have an account? Sign Up</div>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-md-6" id="signup-container" style="display: none;">
+                <div class="card">
+                    <h3 class="text-center mb-4">Sign Up</h3>
+                    <form id="signup-form" class="form-signin" action="index.html">
+                        <div class="form-group">
+                            <label for="new_username">Username:</label>
+                            <input type="text" class="form-control" id="new_username" name="new_username" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="new_password">Password:</label>
+                            <input type="password" class="form-control" id="new_password" name="new_password" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">Sign Up</button>
+                    </form>
+                    <div class="toggle-form" id="toggle-signin">Already have an account? Sign In</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('toggle-signup').addEventListener('click', function() {
+            document.getElementById('signin-form').style.display = 'none';
+            document.getElementById('signup-container').style.display = 'block';
+        });
+
+        document.getElementById('toggle-signin').addEventListener('click', function() {
+            document.getElementById('signin-form').style.display = 'block';
+            document.getElementById('signup-container').style.display = 'none';
+        });
+    </script>
+</body>
+
+</html>

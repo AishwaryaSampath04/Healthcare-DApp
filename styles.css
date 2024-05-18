@@ -1,0 +1,51 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f4f4f4;
+}
+
+.container {
+    text-align: center;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+img {
+    border-radius: 10px 10px 0 0;
+}
+
+h1 {
+    color: #333;
+}
+
+#locationDetails {
+    margin: 20px 0;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+#barcodeInput {
+    font-size: 16px;
+    padding: 10px;
+    width: 200px;
+    margin-top: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+#clock {
+    margin-top: 20px;
+    font-size: 18px;
+    color: #555;
+    font-weight: bold;
+    color: #3498db;
+}

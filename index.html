@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📦 Package Tracking</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            background-image: url('https://images.unsplash.com/photo-1517336714731-489689fd1ca8');
+            background-size: cover;
+            background-position: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: white;
+        }
+
+        .container {
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 30px;
+            border-radius: 10px;
+            margin-top: 50px;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            font-size: 1.2rem;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1.2rem;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+        .btn-back {
+            background-color: #6c757d;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1.2rem;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+            margin-bottom: 20px;
+        }
+
+        .btn-back:hover {
+            background-color: #5a6268;
+        }
+
+        .form-control {
+            border-radius: 5px;
+            padding: 10px;
+        }
+
+        .icon {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container text-center">
+        <button class="btn btn-back" onclick="goBack()"><i class="fas fa-arrow-left icon"></i> Back</button>
+        <h2>📦 Package Tracking</h2>
+        <form id="tracking-form">
+            <div class="form-group">
+                <label for="medicineId"><i class="fas fa-prescription-bottle-alt icon"></i> Medicine ID:</label>
+                <input type="text" class="form-control" id="medicineId" placeholder="Enter Medicine ID" required>
+            </div>
+
+            <div class="form-group">
+                <label for="status"><i class="fas fa-info-circle icon"></i> Status:</label>
+                <input type="text" class="form-control" id="status" placeholder="Enter Status" required>
+            </div>
+
+            <button type="button" class="btn btn-primary" id="track-button"><i class="fas fa-search icon"></i> Track Package</button>
+        </form>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/web3@4.5.0/dist/web3.min.js"></script>
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            if (window.ethereum) {
+                window.web3 = new Web3(window.ethereum);
+                await window.ethereum.enable();
+            } else if (window.web3) {
+                window.web3 = new Web3(window.web3.currentProvider);
+            } else {
+                console.error('Non-Ethereum browser detected. Install MetaMask.');
+                return;
+            }
+
+            const accounts = await web3.eth.getAccounts();
+            web3.eth.defaultAccount = accounts[0];
+
+            const contractAddress = '0x65C9845B36917DaC7829fB7eB5721661ef561E77'; // Use your contract address
+            const contractABI = [
+                {
+                    "inputs": [
+                        {
+                            "internalType": "uint256",
+                            "name": "id",
+                            "type": "uint256"
+                        },
+                        {
+                            "internalType": "string",
+                            "name": "name",
+                            "type": "string"
+                        },
+                        {
+                            "internalType": "string",
+                            "name": "manufacturer",
+                            "type": "string"
+                        },
+                        {
+                            "internalType": "string",
+                            "name": "location",
+                            "type": "string"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "expiryDate",
+                            "type": "uint256"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "preservationTemperature",
+                            "type": "uint256"
+                        }
+                    ],
+                    "name": "addMedicine",
+                    "outputs": [],
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "uint256",
+                            "name": "id",
+                            "type": "uint256"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "timestamp",
+                            "type": "uint256"
+                        },
+                        {
+                            "internalType": "string",
+                            "name": "location",
+                            "type": "string"
+                        },
+                        {
+                            "internalType": "string",
+                            "name": "status",
+                            "type": "string"
+                        }
+                    ],
+                    "name": "addTracking",
+                    "outputs": [],
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "uint256",
+                            "name": "id",
+                            "type": "uint256"
+                        }
+                    ],
+                    "name": "getMedicineDetails",
+                    "outputs": [
+                        {
+                            "components": [
+                                {
+                                    "internalType": "string",
+                                    "name": "name",
+                                    "type": "string"
+                                },
+                                {
+                                    "internalType": "string",
+                                    "name": "manufacturer",
+                                    "type": "string"
+                                },
+                                {
+                                    "internalType": "string",
+                                    "name": "location",
+                                    "type": "string"
+                                },
+                                {
+                                    "internalType": "uint256",
+                                    "name": "expiryDate",
+                                    "type": "uint256"
+                                },
+                                {
+                                    "internalType": "uint256",
+                                    "name": "preservationTemperature",
+                                    "type": "uint256"
+                                },
+                                {
+                                    "internalType": "bool",
+                                    "name": "exists",
+                                    "type": "bool"
+                                }
+                            ],
+                            "internalType": "struct MedicalDetails.Medicine",
+                            "name": "",
+                            "type": "tuple"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "uint256",
+                            "name": "id",
+                            "type": "uint256"
+                        }
+                    ],
+                    "name": "getTrackingDetails",
+                    "outputs": [
+                        {
+                            "components": [
+                                {
+                                    "internalType": "uint256",
+                                    "name": "timestamp",
+                                    "type": "uint256"
+                                },
+                                {
+                                    "internalType": "string",
+                                    "name": "location",
+                                    "type": "string"
+                                },
+                                {
+                                    "internalType": "string",
+                                    "name": "status",
+                                    "type": "string"
+                                }
+                            ],
+                            "internalType": "struct MedicalDetails.Tracking[]",
+                            "name": "",
+                            "type": "tuple[]"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "uint256",
+                            "name": "",
+                            "type": "uint256"
+                        }
+                    ],
+                    "name": "medicines",
+                    "outputs": [
+                        {
+                            "internalType": "string",
+                            "name": "name",
+                            "type": "string"
+                        },
+                        {
+                            "internalType": "string",
+                            "name": "manufacturer",
+                            "type": "string"
+                        },
+                        {
+                            "internalType": "string",
+                            "name": "location",
+                            "type": "string"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "expiryDate",
+                            "type": "uint256"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "preservationTemperature",
+                            "type": "uint256"
+                        },
+                        {
+                            "internalType": "bool",
+                            "name": "exists",
+                            "type": "bool"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "uint256",
+                            "name": "",
+                            "type": "uint256"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "",
+                            "type": "uint256"
+                        }
+                    ],
+                    "name": "trackingDetails",
+                    "outputs": [
+                        {
+                            "internalType": "uint256",
+                            "name": "timestamp",
+                            "type": "uint256"
+                        },
+                        {
+                            "internalType": "string",
+                            "name": "location",
+                            "type": "string"
+                        },
+                        {
+                            "internalType": "string",
+                            "name": "status",
+                            "type": "string"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                }
+            ];
+
+            const packageContract = new web3.eth.Contract(contractABI, contractAddress);
+
+            const trackingForm = document.getElementById('tracking-form');
+            const trackButton = document.getElementById('track-button');
+
+            trackButton.addEventListener('click', async () => {
+                const medicineId = trackingForm.elements['medicineId'].value;
+                const status = trackingForm.elements['status'].value;
+
+                try {
+                    navigator.geolocation.getCurrentPosition(async (position) => {
+                        const latitude = position.coords.latitude;
+                        const longitude = position.coords.longitude;
+
+                        const timestamp = Math.floor(Date.now() / 1000);
+
+                        await packageContract.methods.addTracking(
+                            medicineId,
+                            timestamp,
+                            `Latitude: ${latitude}, Longitude: ${longitude}`,
+                            status
+                        ).send({ from: web3.eth.defaultAccount });
+
+                        console.log('Tracking Data submitted successfully.');
+                    }, (error) => {
+                        console.error('Geolocation error:', error);
+                    });
+                } catch (error) {
+                    console.error('Error tracking package:', error);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
